@@ -2,6 +2,13 @@
 
 > Inclusive Community Transportation Platform connecting passengers with traditional Tricycles, Bao Bao (e-tricycles), and local vehicles across three unified channels: **App**, **SMS**, and **Terminal Dispatcher**.
 
+## Table of Contents
+
+1. [Architecture & Monorepo Structure](#1-architecture--monorepo-structure)
+2. [How to Run](#2-how-to-run)
+3. [The Three Driver Channels & Tracking Honesty Rule](#3-the-three-driver-channels--tracking-honesty-rule)
+4. [Ride State Machine](#4-ride-state-machine)
+
 ---
 
 ## 1. Architecture & Monorepo Structure
@@ -50,6 +57,12 @@
 
 ## 2. How to Run
 
+### Prerequisites
+
+- Node.js 18+ installed
+- PostgreSQL database (or Supabase project)
+- Environment variables configured
+
 ### Installation
 ```bash
 pnpm install
@@ -89,13 +102,19 @@ npm run dev
 
 ### Running the Test Suite
 Executes the pure `RideStateMachine` tests, `SmsCommandParser` tests, `calculateLocationFreshness` downgrade tests, and the E2E ride dispatch & acceptance concurrency test:
+
 ```bash
 npm test
 ```
 
+### Build for Production
+```bash
+npm run build
+```
+
 ---
 
-## 3. The Three Driver Channels & Tracking Honesty Rule
+## 4. The Three Driver Channels & Tracking Honesty Rule
 
 | Channel | Description | Offer Delivery | Acceptance Mechanism | Tracking Source | UI Badge |
 |---|---|---|---|---|---|
@@ -107,7 +126,7 @@ npm test
 
 ---
 
-## 4. Ride State Machine
+## 5. Ride State Machine
 
 Transitions enforced in `RideStateMachine` (`apps/api/src/modules/rides/ride-state-machine.ts`):
 ```
