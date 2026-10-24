@@ -1,3 +1,6 @@
+/**
+ * Supported SMS command types for driver interactions.
+ */
 export type SmsCommandType =
   | 'ACCEPT'
   | 'DECLINE'
@@ -10,6 +13,9 @@ export type SmsCommandType =
   | 'HELP'
   | 'UNKNOWN';
 
+/**
+ * Parsed SMS command with extracted parameters.
+ */
 export interface ParsedSmsCommand {
   type: SmsCommandType;
   shortCode?: string;
@@ -17,7 +23,16 @@ export interface ParsedSmsCommand {
   rawText: string;
 }
 
+/**
+ * Parser for SMS commands sent by drivers.
+ * Supports numeric shortcuts (1, 2) and text commands (ACCEPT, DECLINE, etc.).
+ */
 export class SmsCommandParser {
+  /**
+   * Parses an SMS message into a structured command.
+   * @param input - The raw SMS text from the driver
+   * @returns ParsedSmsCommand with command type and extracted parameters
+   */
   public static parse(input: string): ParsedSmsCommand {
     const rawText = input || '';
     const trimmed = rawText.trim();
