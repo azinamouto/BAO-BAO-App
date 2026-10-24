@@ -112,6 +112,15 @@ npm test
 npm run build
 ```
 
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm test` - Run test suite (unit + E2E)
+- `npm run preview` - Preview production build
+- `npm run clean` - Clean build artifacts
+- `npm run lint` - Run TypeScript type checking
+
 ---
 
 ## 4. The Three Driver Channels & Tracking Honesty Rule
