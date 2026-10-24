@@ -23,6 +23,10 @@ import { RideStateMachine } from '../rides/ride-state-machine';
 import { DispatchService } from '../dispatch/dispatch.service';
 import { calculateLocationFreshness } from '../location/location-freshness';
 
+/**
+ * Service for managing driver profiles, locations, and ride operations.
+ * Handles driver registration, status updates, location tracking, and ride management.
+ */
 @Injectable()
 export class DriversService {
   constructor(
@@ -30,6 +34,13 @@ export class DriversService {
     @Inject(DispatchService) private readonly dispatchService: DispatchService,
   ) {}
 
+  /**
+   * Retrieves driver profile for a given user ID.
+   * Includes vehicle information and current location.
+   * @param userId - The user profile ID
+   * @returns Driver profile with vehicle and location data
+   * @throws NotFoundException if no driver profile exists for the user
+   */
   async getDriverForUser(userId: string): Promise<any> {
     const driver = this.db.drivers.find((d) => d.profileId === userId);
     if (!driver) {
@@ -57,6 +68,15 @@ export class DriversService {
     };
   }
 
+  /**
+   * Registers a new driver with the platform.
+   * Creates driver profile, vehicle record, and links them together.
+   * Registration is pending admin approval.
+   * @param user - The user profile registering as a driver
+   * @param dto - Driver registration details
+   * @returns Registration confirmation with driver ID and status
+   * @throws BadRequestException if driver already registered
+   */
   async registerDriver(user: ProfileDto, dto: RegisterDriverDto): Promise<any> {
     const existing = this.db.drivers.find((d) => d.profileId === user.id);
     if (existing) {
@@ -112,6 +132,15 @@ export class DriversService {
     };
   }
 
+  /**
+   * Updates driver availability status.
+   * Only approved drivers can change their availability.
+   * @param driverId - The driver ID
+   * @param dto - New availability status
+   * @returns Updated driver status
+   * @throws NotFoundException if driver not found
+   * @throws ForbiddenException if driver is not approved
+   */
   async updateStatus(driverId: string, dto: UpdateDriverStatusDto): Promise<any> {
     const driver = this.db.drivers.find((d) => d.id === driverId);
     if (!driver) throw new NotFoundException('Driver not found');
@@ -127,6 +156,14 @@ export class DriversService {
     return { driverId: driver.id, availability: driver.availability };
   }
 
+  /**
+   * Updates driver location from app GPS ping.
+   * Records location as LIVE_APP and maintains location history.
+   * @param driverId - The driver ID
+   * @param dto - Location coordinates
+   * @returns Location update confirmation
+   * @throws NotFoundException if driver not found
+   */
   async updateLocation(driverId: string, dto: DriverLocationUpdateDto): Promise<any> {
     const driver = this.db.drivers.find((d) => d.id === driverId);
     if (!driver) throw new NotFoundException('Driver not found');
@@ -158,6 +195,11 @@ export class DriversService {
     };
   }
 
+  /**
+   * Retrieves pending ride offers for a driver.
+   * @param driverId - The driver ID
+   * @returns List of pending offers with ride details
+   */
   async getOffers(driverId: string): Promise<any[]> {
     const offers = this.db.rideOffers.filter(
       (o) => o.driverId === driverId && o.status === 'PENDING',
@@ -172,14 +214,40 @@ export class DriversService {
     });
   }
 
+  /**
+   * Accepts a ride offer on behalf of the driver.
+   * Delegates to dispatch service for state transition and concurrency control.
+   * @param offerId - The offer ID to accept
+   * @param profileId - The driver's profile ID
+   * @returns Updated ride information
+   */
   async acceptOffer(offerId: string, profileId: string): Promise<any> {
     return this.dispatchService.acceptOffer(offerId, profileId, ActorType.DRIVER);
   }
 
+  /**
+   * Declines a ride offer on behalf of the driver.
+   * Delegates to dispatch service.
+   * @param offerId - The offer ID to decline
+   * @param profileId - The driver's profile ID
+   * @returns Decline confirmation
+   */
   async declineOffer(offerId: string, profileId: string): Promise<any> {
     return this.dispatchService.declineOffer(offerId, profileId, ActorType.DRIVER);
   }
 
+  /**
+   * Updates ride status during active ride progression.
+   * Validates state transitions and records status history.
+   * Automatically marks driver as available when ride completes.
+   * @param driverId - The driver ID
+   * @param rideId - The ride ID
+   * @param targetStatus - The new ride status
+   * @param profileId - The driver's profile ID for audit
+   * @returns Updated ride information
+   * @throws NotFoundException if ride not found or not assigned to driver
+   * @throws ConflictException if invalid state transition
+   */
   async updateRideStatus(
     driverId: string,
     rideId: string,
@@ -221,6 +289,11 @@ export class DriversService {
     return ride;
   }
 
+  /**
+   * Retrieves ride history for a driver.
+   * @param driverId - The driver ID
+   * @returns List of rides sorted by request time (newest first)
+   */
   async getDriverRides(driverId: string): Promise<any[]> {
     return this.db.rideRequests
       .filter((r) => r.driverId === driverId)
