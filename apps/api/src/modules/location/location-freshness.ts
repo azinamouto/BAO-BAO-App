@@ -1,14 +1,40 @@
 import { TrackingSource } from '@bao-bao/shared';
 
+/**
+ * Result of location freshness calculation.
+ * Includes the effective tracking source after downgrade rules,
+ * the age of the location data, and whether it should be hidden.
+ */
 export interface FreshnessResult {
   effectiveSource: TrackingSource;
   ageSeconds: number;
   isHidden: boolean;
 }
 
+/**
+ * Threshold in seconds for LIVE_APP location to be considered fresh.
+ * Locations older than this are downgraded to LAST_REPORTED.
+ */
 export const LIVE_APP_FRESHNESS_THRESHOLD_SEC = 120; // 2 minutes
+
+/**
+ * Threshold in seconds for location visibility on the map.
+ * Locations older than this are hidden from passengers.
+ */
 export const MAP_VISIBILITY_EXPIRY_SEC = 1800; // 30 minutes
 
+/**
+ * Calculates location freshness and applies honesty downgrade rules.
+ *
+ * Downgrade rules:
+ * - LIVE_APP locations older than 2 minutes become LAST_REPORTED
+ * - Locations older than 30 minutes are hidden from the map
+ *
+ * @param originalSource - The original tracking source of the location
+ * @param locationUpdatedAt - When the location was last updated (Date or ISO string)
+ * @param now - Current time for calculation (defaults to now)
+ * @returns FreshnessResult with effective source, age, and visibility status
+ */
 export function calculateLocationFreshness(
   originalSource: TrackingSource,
   locationUpdatedAt: Date | string,
