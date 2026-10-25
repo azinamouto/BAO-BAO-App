@@ -9,6 +9,11 @@ import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { UserRole } from '@bao-bao/shared';
 
+/**
+ * Guard for role-based access control.
+ * Checks if the authenticated user has the required role(s) to access a route.
+ * Used in conjunction with @Roles() decorator on controller methods.
+ */
 @Injectable()
 export class RolesGuard implements CanActivate {
   private reflector: Reflector;
@@ -17,6 +22,12 @@ export class RolesGuard implements CanActivate {
     this.reflector = reflector || new Reflector();
   }
 
+  /**
+   * Determines if the current user has the required role(s).
+   * @param context - The execution context
+   * @returns true if user has required role, false otherwise
+   * @throws ForbiddenException if user lacks required role or is not authenticated
+   */
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<(UserRole | string)[]>(
       ROLES_KEY,
