@@ -3,11 +3,23 @@ import { ApiTags, ApiOperation, ApiQuery, ApiBearerAuth, ApiResponse } from '@ne
 import { LocationService } from './location.service';
 import { SupabaseAuthGuard } from '../../common/guards/supabase-auth.guard';
 
+/**
+ * Controller for location-based vehicle queries.
+ * Provides endpoint for finding nearby available vehicles with freshness tracking.
+ */
 @ApiTags('Location')
 @Controller('vehicles')
 export class LocationController {
   constructor(@Inject(LocationService) private readonly locationService: LocationService) {}
 
+  /**
+   * Retrieves nearby available vehicles within a radius.
+   * Applies location freshness rules for tracking source downgrade.
+   * @param lat - Center latitude
+   * @param lng - Center longitude
+   * @param radius - Search radius in meters (default 3000)
+   * @returns List of nearby vehicles sorted by distance
+   */
   @Get('nearby')
   @UseGuards(SupabaseAuthGuard)
   @ApiBearerAuth()
