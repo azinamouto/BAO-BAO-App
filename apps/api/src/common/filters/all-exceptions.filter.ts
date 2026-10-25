@@ -7,6 +7,10 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
+/**
+ * Standard API error response format.
+ * Used consistently across all endpoints for error handling.
+ */
 export interface ApiErrorResponse {
   statusCode: number;
   code: string;
@@ -14,8 +18,18 @@ export interface ApiErrorResponse {
   details?: unknown;
 }
 
+/**
+ * Global exception filter for consistent error responses.
+ * Catches all exceptions and formats them into a standardized API error response.
+ * Handles both NestJS HttpException and generic Error types.
+ */
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
+  /**
+   * Catches and formats exceptions into consistent API error responses.
+   * @param exception - The caught exception
+   * @param host - The arguments host
+   */
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -56,6 +70,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(statusCode).json(payload);
   }
 
+  /**
+   * Derives a semantic error code from HTTP status and message.
+   * Maps common error scenarios to specific error codes.
+   * @param status - HTTP status code
+   * @param message - Error message
+   * @returns Semantic error code
+   */
   private deriveErrorCode(status: number, message: string): string {
     if (status === HttpStatus.UNAUTHORIZED) return 'AUTH_UNAUTHORIZED';
     if (status === HttpStatus.FORBIDDEN) return 'AUTH_FORBIDDEN';
