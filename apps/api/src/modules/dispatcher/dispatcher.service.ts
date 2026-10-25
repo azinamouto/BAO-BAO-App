@@ -18,10 +18,21 @@ import { DatabaseService } from '../database/database.service';
 import { RideStateMachine } from '../rides/ride-state-machine';
 import { calculateLocationFreshness } from '../location/location-freshness';
 
+/**
+ * Service for terminal dispatcher operations.
+ * Handles terminal queue management, driver assignment, and ride status updates on behalf of drivers.
+ * Used by terminal dispatchers who operate from physical terminals.
+ */
 @Injectable()
 export class DispatcherService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
+  /**
+   * Retrieves terminals accessible to the dispatcher.
+   * Admins see all terminals, dispatchers see only their assigned terminals.
+   * @param profileId - The dispatcher's profile ID
+   * @returns List of accessible terminals
+   */
   async getTerminals(profileId: string): Promise<any[]> {
     const user = this.db.profiles.find((p) => p.id === profileId);
     if (user?.role === 'ADMIN') {
@@ -32,6 +43,12 @@ export class DispatcherService {
     return this.db.terminals.filter((t) => terminalIds.has(t.id));
   }
 
+  /**
+   * Retrieves ride requests with optional status filter.
+   * Includes driver information for assigned rides.
+   * @param statusFilter - Optional ride status to filter by
+   * @returns List of rides sorted by request time (newest first)
+   */
   async getRides(statusFilter?: string): Promise<any[]> {
     let rides = this.db.rideRequests;
     if (statusFilter) {
@@ -50,6 +67,12 @@ export class DispatcherService {
       });
   }
 
+  /**
+   * Retrieves all drivers with their locations, queue status, and vehicles.
+   * Applies location freshness rules for tracking source.
+   * @param terminalId - Optional terminal ID to filter by
+   * @returns List of drivers with enhanced information
+   */
   async getDrivers(terminalId?: string): Promise<any[]> {
     return this.db.drivers.map((d) => {
       const loc = this.db.driverLocations.get(d.id);
@@ -76,6 +99,14 @@ export class DispatcherService {
     });
   }
 
+  /**
+   * Checks a driver into the terminal queue.
+   * Updates driver availability and location to terminal coordinates.
+   * @param terminalId - The terminal ID
+   * @param driverId - The driver ID
+   * @returns Queue entry with position
+   * @throws NotFoundException if driver or terminal not found
+   */
   async queueCheckIn(terminalId: string, driverId: string): Promise<any> {
     const driver = this.db.drivers.find((d) => d.id === driverId);
     if (!driver) throw new NotFoundException('Driver not found');
@@ -120,6 +151,14 @@ export class DispatcherService {
     return entry;
   }
 
+  /**
+   * Checks a driver out of the terminal queue.
+   * Marks driver as offline if their primary channel is DISPATCHER.
+   * @param terminalId - The terminal ID
+   * @param driverId - The driver ID
+   * @returns Updated queue entry
+   * @throws NotFoundException if driver not in queue
+   */
   async queueCheckOut(terminalId: string, driverId: string): Promise<any> {
     const entry = this.db.terminalQueue.find(
       (tq) => tq.terminalId === terminalId && tq.driverId === driverId && !tq.checkedOutAt,
@@ -136,6 +175,16 @@ export class DispatcherService {
     return entry;
   }
 
+  /**
+   * Manually assigns a driver to a ride.
+   * Bypasses dispatch system and directly assigns driver.
+   * @param rideId - The ride ID
+   * @param driverId - The driver ID
+   * @param dispatcher - The dispatcher profile
+   * @returns Updated ride information
+   * @throws NotFoundException if ride or driver not found
+   * @throws BadRequestException if driver not approved
+   */
   async assignRide(rideId: string, driverId: string, dispatcher: ProfileDto): Promise<any> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) throw new NotFoundException('Ride not found');
@@ -194,6 +243,16 @@ export class DispatcherService {
     return ride;
   }
 
+  /**
+   * Updates ride status on behalf of a driver.
+   * Used when dispatcher acts on driver's behalf via terminal console.
+   * @param rideId - The ride ID
+   * @param targetStatus - The new ride status
+   * @param dispatcher - The dispatcher profile
+   * @returns Updated ride information
+   * @throws NotFoundException if ride not found
+   * @throws ConflictException if invalid state transition
+   */
   async updateRideStatusOnBehalf(
     rideId: string,
     targetStatus: RideStatus,
@@ -228,6 +287,13 @@ export class DispatcherService {
     return ride;
   }
 
+  /**
+   * Creates an offline driver (SMS or Terminal channel).
+   * Used for drivers who don't have app accounts.
+   * @param dto - Driver and vehicle details
+   * @param dispatcher - The dispatcher profile
+   * @returns Created driver information
+   */
   async createOfflineDriver(
     dto: {
       fullName: string;
