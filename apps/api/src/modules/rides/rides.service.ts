@@ -31,6 +31,11 @@ const ACTIVE_RIDE_STATUSES: RideStatus[] = [
   RideStatus.IN_PROGRESS,
 ];
 
+/**
+ * Service for ride lifecycle management.
+ * Handles ride creation, cancellation, retries, ratings, and incident reporting.
+ * Enforces one-active-ride rule and sanitizes driver information for passengers.
+ */
 @Injectable()
 export class RidesService {
   private readonly logger = new Logger(RidesService.name);
@@ -40,6 +45,14 @@ export class RidesService {
     @Inject(DispatchService) private readonly dispatchService: DispatchService,
   ) {}
 
+  /**
+   * Creates a new ride request.
+   * Enforces one-active-ride rule and triggers dispatch process.
+   * @param passenger - The passenger profile
+   * @param dto - Ride creation details
+   * @returns Created ride with sanitized driver information
+   * @throws ConflictException if passenger already has an active ride
+   */
   async createRide(passenger: ProfileDto, dto: CreateRideDto): Promise<any> {
     // Enforce one-active-ride rule at database level
     const existingActive = this.db.rideRequests.find(
@@ -106,6 +119,11 @@ export class RidesService {
     return this.sanitizeRide(ride);
   }
 
+  /**
+   * Retrieves the active ride for a passenger.
+   * @param passengerId - The passenger ID
+   * @returns Active ride with sanitized driver information, or null if none
+   */
   async getActiveRide(passengerId: string): Promise<any | null> {
     const ride = this.db.rideRequests
       .filter((r) => r.passengerId === passengerId && ACTIVE_RIDE_STATUSES.includes(r.status))
@@ -114,6 +132,13 @@ export class RidesService {
     return ride ? this.sanitizeRide(ride) : null;
   }
 
+  /**
+   * Retrieves a specific ride by ID.
+   * @param rideId - The ride ID
+   * @param _user - Optional user profile for authorization checks
+   * @returns Ride with sanitized driver information
+   * @throws NotFoundException if ride not found
+   */
   async getRideById(rideId: string, _user?: ProfileDto): Promise<any> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) {
@@ -127,6 +152,11 @@ export class RidesService {
     return this.sanitizeRide(ride);
   }
 
+  /**
+   * Retrieves ride history for a passenger.
+   * @param passengerId - The passenger ID
+   * @returns List of rides sorted by request time (newest first)
+   */
   async getRideHistory(passengerId: string): Promise<any[]> {
     const rides = this.db.rideRequests
       .filter((r) => r.passengerId === passengerId)
@@ -135,6 +165,16 @@ export class RidesService {
     return rides.map((r) => this.sanitizeRide(r));
   }
 
+  /**
+   * Cancels a ride request.
+   * Releases assigned driver and cancels pending offers.
+   * @param rideId - The ride ID
+   * @param actor - The profile cancelling the ride
+   * @param dto - Cancellation reason
+   * @returns Cancelled ride with sanitized driver information
+   * @throws NotFoundException if ride not found
+   * @throws ConflictException if invalid state transition
+   */
   async cancelRide(rideId: string, actor: ProfileDto, dto: CancelRideDto): Promise<any> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) {
@@ -175,6 +215,15 @@ export class RidesService {
     return this.sanitizeRide(ride);
   }
 
+  /**
+   * Retries a ride that failed to find a driver.
+   * Resets status to REQUESTED and triggers dispatch again.
+   * @param rideId - The ride ID
+   * @param actor - The profile requesting the retry
+   * @returns Updated ride with sanitized driver information
+   * @throws NotFoundException if ride not found
+   * @throws ConflictException if invalid state transition
+   */
   async retryRide(rideId: string, actor: ProfileDto): Promise<any> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) {
@@ -200,6 +249,16 @@ export class RidesService {
     return this.sanitizeRide(ride);
   }
 
+  /**
+   * Rates a completed ride.
+   * Only the passenger who took the ride can rate it.
+   * @param rideId - The ride ID
+   * @param passengerId - The passenger ID
+   * @param dto - Rating score and optional comment
+   * @returns Created rating record
+   * @throws NotFoundException if ride not found
+   * @throws BadRequestException if ride not completed or wrong passenger
+   */
   async rateRide(rideId: string, passengerId: string, dto: RateRideDto): Promise<any> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) {
@@ -225,6 +284,14 @@ export class RidesService {
     return rating;
   }
 
+  /**
+   * Reports an incident for a ride.
+   * @param rideId - The ride ID
+   * @param reporterId - The profile ID of the reporter
+   * @param dto - Incident category and description
+   * @returns Created incident report
+   * @throws NotFoundException if ride not found
+   */
   async reportIncident(rideId: string, reporterId: string, dto: ReportIncidentDto): Promise<any> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) {
@@ -244,7 +311,12 @@ export class RidesService {
     return report;
   }
 
-  // Sanitizer: Never expose driver phone numbers to passengers
+  /**
+   * Sanitizes ride data for passenger consumption.
+   * Removes sensitive driver information (phone numbers) and applies location freshness rules.
+   * @param ride - The raw ride object
+   * @returns Sanitized ride with safe driver information
+   */
   private sanitizeRide(ride: any): any {
     let driverInfo = null;
     let driverLocation = null;

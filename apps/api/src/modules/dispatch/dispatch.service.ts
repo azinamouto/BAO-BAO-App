@@ -18,6 +18,11 @@ import { DatabaseService, calculateDistanceMeters } from '../database/database.s
 import { ChannelsService } from '../channels/channels.service';
 import { RideStateMachine } from '../rides/ride-state-machine';
 
+/**
+ * Service for ride dispatch operations.
+ * Handles driver candidate ranking, offer creation, and acceptance/decline logic.
+ * Implements concurrency control with row-locking to prevent double-acceptance.
+ */
 @Injectable()
 export class DispatchService {
   private readonly logger = new Logger(DispatchService.name);
@@ -27,6 +32,14 @@ export class DispatchService {
     @Inject(ChannelsService) private readonly channels: ChannelsService,
   ) {}
 
+  /**
+   * Dispatches a ride to the nearest eligible driver.
+   * Filters drivers by approval, availability, capacity, and previous declines.
+   * Ranks candidates by distance and creates an offer with channel-specific TTL.
+   * @param rideId - The ride ID to dispatch
+   * @returns true if offer created, false if no eligible drivers
+   * @throws NotFoundException if ride not found
+   */
   async dispatch(rideId: string): Promise<boolean> {
     const ride = this.db.rideRequests.find((r) => r.id === rideId);
     if (!ride) {
@@ -177,6 +190,17 @@ export class DispatchService {
     return true;
   }
 
+  /**
+   * Accepts a ride offer on behalf of a driver or dispatcher.
+   * Uses row-locking to prevent concurrent acceptance of the same offer.
+   * @param offerId - The offer ID to accept
+   * @param actorProfileId - The profile ID of the actor accepting
+   * @param actorType - The type of actor (DRIVER or DISPATCHER)
+   * @returns Acceptance confirmation with ride details
+   * @throws NotFoundException if offer or ride not found
+   * @throws GoneException if offer has expired
+   * @throws ConflictException if offer already taken or ride locked
+   */
   async acceptOffer(offerId: string, actorProfileId?: string, actorType: ActorType = ActorType.DRIVER): Promise<any> {
     const offer = this.db.rideOffers.find((o) => o.id === offerId);
     if (!offer) {
@@ -283,6 +307,15 @@ export class DispatchService {
     }
   }
 
+  /**
+   * Declines a ride offer and triggers dispatch to next candidate.
+   * Reverts ride to DISPATCHING status and attempts to find next driver.
+   * @param offerId - The offer ID to decline
+   * @param actorProfileId - The profile ID of the actor declining
+   * @param actorType - The type of actor (DRIVER or DISPATCHER)
+   * @returns Decline confirmation
+   * @throws NotFoundException if offer not found
+   */
   async declineOffer(offerId: string, actorProfileId?: string, actorType: ActorType = ActorType.DRIVER): Promise<any> {
     const offer = this.db.rideOffers.find((o) => o.id === offerId);
     if (!offer) {

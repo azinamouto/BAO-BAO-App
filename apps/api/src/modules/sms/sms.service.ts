@@ -12,10 +12,18 @@ import { SmsCommandParser, ParsedSmsCommand } from './sms-command-parser';
 import { DispatchService } from '../dispatch/dispatch.service';
 import { RideStateMachine } from '../rides/ride-state-machine';
 
+/**
+ * Interface for SMS provider implementation.
+ * Allows plugging in different SMS gateways (Twilio, etc.).
+ */
 export interface SmsProvider {
   sendSms(to: string, message: string): Promise<{ success: boolean; messageId: string }>;
 }
 
+/**
+ * Console-based SMS provider for development/testing.
+ * Logs SMS messages to console instead of sending via real gateway.
+ */
 @Injectable()
 export class ConsoleSmsProvider implements SmsProvider {
   private readonly logger = new Logger(ConsoleSmsProvider.name);
@@ -27,6 +35,10 @@ export class ConsoleSmsProvider implements SmsProvider {
   }
 }
 
+/**
+ * Service for SMS-based driver interactions.
+ * Handles inbound SMS commands, driver location updates, and ride status changes via SMS.
+ */
 @Injectable()
 export class SmsService {
   private readonly logger = new Logger(SmsService.name);
@@ -37,6 +49,11 @@ export class SmsService {
     @Inject(ConsoleSmsProvider) private readonly smsProvider: ConsoleSmsProvider,
   ) {}
 
+  /**
+   * Normalizes phone number to Philippine format (+63...).
+   * @param phone - Raw phone number
+   * @returns Normalized phone number
+   */
   normalizePhoneNumber(phone: string): string {
     let clean = phone.replace(/[^\d+]/g, '');
     if (clean.startsWith('09')) {
@@ -49,6 +66,14 @@ export class SmsService {
     return clean;
   }
 
+  /**
+   * Handles inbound SMS from drivers.
+   * Parses commands and executes corresponding actions (accept, decline, location, etc.).
+   * @param from - Sender phone number
+   * @param rawBody - SMS message body
+   * @param signature - Optional webhook signature for verification
+   * @returns Reply message and action taken
+   */
   async handleInboundSms(from: string, rawBody: string, signature?: string): Promise<{ reply: string; actionTaken: string }> {
     const normalizedPhone = this.normalizePhoneNumber(from);
 
@@ -165,7 +190,7 @@ export class SmsService {
 
       case 'ARRIVED': {
         const activeRide = this.db.rideRequests.find(
-          (r) => r.driverId === driver.id && r.status === RideStatus.DRIVER_EN_ROUTE || r.status === RideStatus.ACCEPTED,
+          (r) => r.driverId === driver.id && (r.status === RideStatus.DRIVER_EN_ROUTE || r.status === RideStatus.ACCEPTED),
         );
         if (!activeRide) {
           reply = 'BAO BAO: No active ride awaiting arrival.';
@@ -250,12 +275,22 @@ export class SmsService {
     return { reply, actionTaken };
   }
 
+  /**
+   * Retrieves SMS message logs.
+   * @returns List of SMS messages sorted by timestamp (newest first)
+   */
   async getSmsLogs(): Promise<any[]> {
     return [...this.db.smsMessages].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
     );
   }
 
+  /**
+   * Sends a test SMS message.
+   * @param to - Recipient phone number
+   * @param message - Message body
+   * @returns SMS provider response
+   */
   async sendTestSms(to: string, message: string): Promise<any> {
     const res = await this.smsProvider.sendSms(to, message);
     this.db.smsMessages.push({

@@ -3,10 +3,23 @@ import { DatabaseService, calculateDistanceMeters } from '../database/database.s
 import { calculateLocationFreshness } from './location-freshness';
 import { NearbyVehicleDto, DriverAvailability, ApprovalStatus } from '@bao-bao/shared';
 
+/**
+ * Service for location-based queries.
+ * Handles nearby vehicle search with location freshness filtering.
+ */
 @Injectable()
 export class LocationService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
+  /**
+   * Retrieves nearby available vehicles within a radius.
+   * Filters by approval status, availability, and location freshness.
+   * Applies honesty downgrade rules for stale locations.
+   * @param lat - Center latitude
+   * @param lng - Center longitude
+   * @param radiusMeters - Search radius in meters (default 3000m)
+   * @returns List of nearby vehicles sorted by distance
+   */
   async getNearbyVehicles(
     lat: number,
     lng: number,
