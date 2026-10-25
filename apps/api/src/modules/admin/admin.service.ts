@@ -8,10 +8,19 @@ import {
 } from '@bao-bao/shared';
 import { DatabaseService } from '../database/database.service';
 
+/**
+ * Service for admin operations.
+ * Handles dashboard statistics, driver/vehicle approvals, and audit logging.
+ */
 @Injectable()
 export class AdminService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
+  /**
+   * Retrieves dashboard statistics for admin overview.
+   * Includes active drivers, vehicles, ride counts, and acceptance rates by channel.
+   * @returns Dashboard statistics object
+   */
   async getDashboardStats(): Promise<any> {
     const activeDrivers = this.db.drivers.filter(
       (d) => d.approvalStatus === ApprovalStatus.APPROVED && d.availability !== DriverAvailability.OFFLINE,
@@ -57,6 +66,10 @@ export class AdminService {
     };
   }
 
+  /**
+   * Retrieves all drivers with their associated vehicles.
+   * @returns List of drivers with vehicle information
+   */
   async getDrivers(): Promise<any[]> {
     return this.db.drivers.map((d) => {
       const dv = this.db.driverVehicles.find((rel) => rel.driverId === d.id && rel.isCurrent);
@@ -68,6 +81,12 @@ export class AdminService {
     });
   }
 
+  /**
+   * Retrieves a specific driver by ID with vehicle information.
+   * @param id - The driver ID
+   * @returns Driver with vehicle information
+   * @throws NotFoundException if driver not found
+   */
   async getDriverById(id: string): Promise<any> {
     const driver = this.db.drivers.find((d) => d.id === id);
     if (!driver) throw new NotFoundException('Driver not found');
@@ -76,6 +95,16 @@ export class AdminService {
     return { ...driver, vehicle };
   }
 
+  /**
+   * Updates driver approval status.
+   * Automatically sets availability based on approval status.
+   * Logs the action in audit trail.
+   * @param id - The driver ID
+   * @param status - New approval status
+   * @param adminUser - The admin user performing the action
+   * @returns Updated driver information
+   * @throws NotFoundException if driver not found
+   */
   async updateDriverApproval(
     id: string,
     status: ApprovalStatus,
@@ -106,6 +135,15 @@ export class AdminService {
     return driver;
   }
 
+  /**
+   * Updates driver's primary communication channel.
+   * Logs the action in audit trail.
+   * @param id - The driver ID
+   * @param channel - New primary channel
+   * @param adminUser - The admin user performing the action
+   * @returns Updated driver information
+   * @throws NotFoundException if driver not found
+   */
   async updateDriverChannel(
     id: string,
     channel: DriverChannel,
@@ -130,6 +168,10 @@ export class AdminService {
     return driver;
   }
 
+  /**
+   * Retrieves all vehicles with type information.
+   * @returns List of vehicles with type details
+   */
   async getVehicles(): Promise<any[]> {
     return this.db.vehicles.map((v) => {
       const vType = this.db.vehicleTypes.find((vt) => vt.id === v.vehicleTypeId);
@@ -141,6 +183,13 @@ export class AdminService {
     });
   }
 
+  /**
+   * Updates vehicle approval status.
+   * @param id - The vehicle ID
+   * @param status - New approval status
+   * @returns Updated vehicle information
+   * @throws NotFoundException if vehicle not found
+   */
   async updateVehicleApproval(id: string, status: ApprovalStatus): Promise<any> {
     const vehicle = this.db.vehicles.find((v) => v.id === id);
     if (!vehicle) throw new NotFoundException('Vehicle not found');
@@ -148,12 +197,20 @@ export class AdminService {
     return vehicle;
   }
 
+  /**
+   * Retrieves all ride requests sorted by request time (newest first).
+   * @returns List of all rides
+   */
   async getAllRides(): Promise<any[]> {
     return [...this.db.rideRequests].sort(
       (a, b) => new Date(b.requestedAt).getTime() - new Date(a.requestedAt).getTime(),
     );
   }
 
+  /**
+   * Retrieves audit logs sorted by timestamp (newest first).
+   * @returns List of audit log entries
+   */
   async getAuditLogs(): Promise<any[]> {
     return [...this.db.auditLogs].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
