@@ -12,6 +12,8 @@ import { SupabaseAuthGuard } from '../../common/guards/supabase-auth.guard';
 export class LocationController {
   constructor(@Inject(LocationService) private readonly locationService: LocationService) {}
 
+  /** Location-based vehicle queries */
+
   /**
    * Retrieves nearby available vehicles within a radius.
    * Applies location freshness rules for tracking source downgrade.
