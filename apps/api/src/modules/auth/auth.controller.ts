@@ -5,11 +5,24 @@ import { SupabaseAuthGuard } from '../../common/guards/supabase-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { AuthSyncDto, ProfileDto } from '@bao-bao/shared';
 
+/**
+ * Controller for authentication and profile synchronization.
+ * Handles profile sync from Supabase Auth to local database.
+ */
 @ApiTags('Auth & Profile')
 @Controller('auth')
 export class AuthController {
   constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
+  /** Sync profile endpoint */
+
+  /**
+   * Synchronizes user profile from Supabase Auth to local database.
+   * Creates new profile if it doesn't exist, updates if it does.
+   * @param user - The authenticated user from Supabase
+   * @param dto - Profile synchronization data
+   * @returns Synchronized profile
+   */
   @Post('sync')
   @UseGuards(SupabaseAuthGuard)
   @ApiBearerAuth()
