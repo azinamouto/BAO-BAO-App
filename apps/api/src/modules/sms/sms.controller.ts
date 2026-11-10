@@ -25,6 +25,8 @@ import { UserRole } from '@bao-bao/shared';
 export class SmsController {
   constructor(@Inject(SmsService) private readonly smsService: SmsService) {}
 
+  /** SMS operations controller */
+
   /**
    * Webhook endpoint for inbound SMS from drivers.
    * Parses commands and triggers corresponding actions.
