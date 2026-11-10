@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Profile } from '@/types'
 
+/** Authentication state management */
 interface AuthState {
   profile: Profile | null
   token: string | null
