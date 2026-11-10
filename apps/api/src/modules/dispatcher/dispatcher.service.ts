@@ -27,6 +27,8 @@ import { calculateLocationFreshness } from '../location/location-freshness';
 export class DispatcherService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
+  /** Terminal dispatcher service */
+
   /**
    * Retrieves terminals accessible to the dispatcher.
    * Admins see all terminals, dispatchers see only their assigned terminals.
