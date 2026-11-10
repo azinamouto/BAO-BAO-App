@@ -33,6 +33,8 @@ import {
 export class RidesController {
   constructor(@Inject(RidesService) private readonly ridesService: RidesService) {}
 
+  /** Rides controller for passenger operations */
+
   /**
    * Creates a new ride request and initiates dispatch.
    * @param passenger - The authenticated passenger
