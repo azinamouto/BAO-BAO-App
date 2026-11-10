@@ -45,6 +45,8 @@ export class RidesService {
     @Inject(DispatchService) private readonly dispatchService: DispatchService,
   ) {}
 
+  /** Ride lifecycle management service */
+
   /**
    * Creates a new ride request.
    * Enforces one-active-ride rule and triggers dispatch process.
