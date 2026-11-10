@@ -49,6 +49,8 @@ export class SmsService {
     @Inject(ConsoleSmsProvider) private readonly smsProvider: ConsoleSmsProvider,
   ) {}
 
+  /** SMS service for driver interactions */
+
   /**
    * Normalizes phone number to Philippine format (+63...).
    * @param phone - Raw phone number
