@@ -16,6 +16,8 @@ import { DatabaseService } from '../database/database.service';
 export class AdminService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
+  /** Admin operations service */
+
   /**
    * Retrieves dashboard statistics for admin overview.
    * Includes active drivers, vehicles, ride counts, and acceptance rates by channel.
