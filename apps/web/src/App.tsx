@@ -104,6 +104,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
 // ─── Root ─────────────────────────────────────────────────────
 
+/** Main application component with routing and auth */
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
