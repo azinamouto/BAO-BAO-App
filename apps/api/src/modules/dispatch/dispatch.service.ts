@@ -32,6 +32,8 @@ export class DispatchService {
     @Inject(ChannelsService) private readonly channels: ChannelsService,
   ) {}
 
+  /** Ride dispatch service */
+
   /**
    * Dispatches a ride to the nearest eligible driver.
    * Filters drivers by approval, availability, capacity, and previous declines.
