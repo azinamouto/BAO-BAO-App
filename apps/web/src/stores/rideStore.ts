@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { RideRequest, LocationPoint } from '@/types'
 
+/** Ride state management */
 interface RideRequestDraft {
   pickup: LocationPoint | null
   destination: LocationPoint | null
