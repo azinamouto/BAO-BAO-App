@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to the BAO BAO platform! This document provides guidelines for contributing to the project.
 
+<!-- Contribution guidelines -->
+
 ## Getting Started
 
 ### Prerequisites
