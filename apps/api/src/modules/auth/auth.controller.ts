@@ -14,8 +14,6 @@ import { AuthSyncDto, ProfileDto } from '@bao-bao/shared';
 export class AuthController {
   constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
-  /** Sync profile endpoint */
-
   /**
    * Synchronizes user profile from Supabase Auth to local database.
    * Creates new profile if it doesn't exist, updates if it does.
