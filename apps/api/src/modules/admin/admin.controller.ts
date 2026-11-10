@@ -35,6 +35,8 @@ import {
 export class AdminController {
   constructor(@Inject(AdminService) private readonly adminService: AdminService) {}
 
+  /** Admin dashboard operations */
+
   /**
    * Retrieves dashboard statistics for admin overview.
    * @returns Dashboard metrics including active drivers, vehicles, and ride counts
