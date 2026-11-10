@@ -11,6 +11,8 @@ import { DatabaseService } from '../database/database.service';
 export class ZonesController {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
+  /** Zones controller */
+
   /**
    * Retrieves all active zones in Talibon.
    * Includes pickup zones, terminals, and coverage areas.
