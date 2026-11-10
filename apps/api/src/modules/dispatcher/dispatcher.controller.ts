@@ -36,6 +36,8 @@ import {
 export class DispatcherController {
   constructor(@Inject(DispatcherService) private readonly dispatcherService: DispatcherService) {}
 
+  /** Dispatcher console operations */
+
   /**
    * Retrieves terminals managed by the current dispatcher.
    * @param user - The authenticated dispatcher
