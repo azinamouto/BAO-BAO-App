@@ -44,6 +44,7 @@ async function request<T>(
   return response.json()
 }
 
+/** API client for backend communication */
 export const api = {
   get: <T>(path: string) => request<T>(path, { method: 'GET' }),
 
