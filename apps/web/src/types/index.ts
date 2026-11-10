@@ -1,5 +1,6 @@
 // ─── Enums ───────────────────────────────────────────────────
 
+/** Type definitions for the application */
 export type UserRole = 'PASSENGER' | 'DRIVER' | 'DISPATCHER' | 'ADMIN'
 export type DriverChannel = 'APP' | 'SMS' | 'DISPATCHER'
 export type TrackingSource = 'LIVE_APP' | 'LAST_REPORTED' | 'TERMINAL' | 'GPS_TRACKER' | 'UNKNOWN'
