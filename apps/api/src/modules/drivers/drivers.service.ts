@@ -34,6 +34,8 @@ export class DriversService {
     @Inject(DispatchService) private readonly dispatchService: DispatchService,
   ) {}
 
+  /** Driver management service */
+
   /**
    * Retrieves driver profile for a given user ID.
    * Includes vehicle information and current location.
