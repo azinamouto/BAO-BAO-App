@@ -22,6 +22,8 @@ import { UpdateProfileDto, ProfileDto } from '@bao-bao/shared';
 export class UsersController {
   constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
+  /** User profile controller */
+
   @Get()
   @ApiOperation({ summary: 'Get current user profile and role' })
   @ApiResponse({ status: 200, description: 'Profile retrieved' })
