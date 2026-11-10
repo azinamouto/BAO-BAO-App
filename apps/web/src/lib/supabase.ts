@@ -7,6 +7,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('[Supabase] Missing env vars — running in demo mode')
 }
 
+/** Supabase client instance */
 export const supabase = createClient(
   supabaseUrl || 'https://demo.supabase.co',
   supabaseAnonKey || 'demo-key',
