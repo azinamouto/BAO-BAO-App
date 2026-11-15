@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { Toast, ModalType } from '@/types'
 
-/** UI state management */
+// Global UI state (toasts, modals, map, sidebar)
 interface UiState {
   // Toasts
   toasts: Toast[]
