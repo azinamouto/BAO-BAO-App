@@ -34,7 +34,7 @@ export class DriversService {
     @Inject(DispatchService) private readonly dispatchService: DispatchService,
   ) {}
 
-  /** Driver management service */
+  // Driver profile and operations management
 
   /**
    * Retrieves driver profile for a given user ID.
