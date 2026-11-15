@@ -62,6 +62,7 @@ export function getTrackingLabel(source: string): string {
   }
 }
 
+// Get human-readable ride status label
 export function getRideStatusLabel(status: string): string {
   const labels: Record<string, string> = {
     REQUESTED: 'Finding Drivers',
