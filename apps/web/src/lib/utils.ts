@@ -22,6 +22,7 @@ export function formatDuration(seconds: number): string {
   return m > 0 ? `${h}h ${m}m` : `${h}h`
 }
 
+// Format relative time (e.g., "5m ago")
 export function formatRelativeTime(dateStr: string): string {
   const date = new Date(dateStr)
   const diff = Date.now() - date.getTime()
