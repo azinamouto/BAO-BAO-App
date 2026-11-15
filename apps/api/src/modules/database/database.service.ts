@@ -163,7 +163,7 @@ export class DatabaseService implements OnModuleInit {
     }
   }
 
-  // Profile lookup
+  // Profile lookup by ID or email
   async findProfileByIdOrEmail(identifier: string): Promise<any | null> {
     return (
       this.profiles.find(
