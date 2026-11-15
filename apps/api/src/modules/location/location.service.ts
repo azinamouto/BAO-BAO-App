@@ -11,7 +11,7 @@ import { NearbyVehicleDto, DriverAvailability, ApprovalStatus } from '@bao-bao/s
 export class LocationService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
-  /** Location query service */
+  // Location-based queries and proximity search
 
   /**
    * Retrieves nearby available vehicles within a radius.
