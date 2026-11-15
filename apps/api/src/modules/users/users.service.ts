@@ -10,7 +10,7 @@ import { AuthSyncDto, UpdateProfileDto, ProfileDto, UserRole } from '@bao-bao/sh
 export class UsersService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
-  /** User profile management service */
+  // Core user profile management operations
 
   /**
    * Synchronizes user profile from auth provider (Supabase).
