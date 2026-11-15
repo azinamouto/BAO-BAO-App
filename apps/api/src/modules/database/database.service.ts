@@ -67,7 +67,7 @@ export class DatabaseService implements OnModuleInit {
     // Initialize vehicle types
     this.vehicleTypes = INITIAL_SEED_DATA.vehicleTypes.map((vt) => ({ ...vt }));
 
-    // 2. Zones
+    // Initialize zones
     this.zones = INITIAL_SEED_DATA.zones.map((z) => ({
       ...z,
       isActive: true,
