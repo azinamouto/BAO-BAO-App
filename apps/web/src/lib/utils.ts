@@ -51,6 +51,7 @@ export function formatDate(dateStr: string): string {
   })
 }
 
+// Get human-readable tracking source label
 export function getTrackingLabel(source: string): string {
   switch (source) {
     case 'LIVE_APP': return 'Live'
