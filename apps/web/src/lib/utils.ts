@@ -80,6 +80,7 @@ export function getRideStatusLabel(status: string): string {
   return labels[status] ?? status
 }
 
+// Get color class for ride status
 export function getRideStatusColor(status: string): string {
   switch (status) {
     case 'REQUESTED':
