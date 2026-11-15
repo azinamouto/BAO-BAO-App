@@ -12,6 +12,7 @@ import { AuthSyncDto, ProfileDto } from '@bao-bao/shared';
 @ApiTags('Auth & Profile')
 @Controller('auth')
 export class AuthController {
+  // Dependency injection for user management
   constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
   /**
