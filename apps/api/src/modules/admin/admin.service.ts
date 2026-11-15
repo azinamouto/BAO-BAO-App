@@ -16,7 +16,7 @@ import { DatabaseService } from '../database/database.service';
 export class AdminService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
-  /** Admin operations service */
+  // Admin dashboard and approval operations
 
   /**
    * Retrieves dashboard statistics for admin overview.
