@@ -93,7 +93,7 @@ export class DatabaseService implements OnModuleInit {
       createdAt: new Date().toISOString(),
     }));
 
-    // Dispatcher assignment
+    // Assign dispatcher to terminal
     this.terminalDispatchers.push({
       id: 'disp-term-1',
       terminalId: this.terminals[0].id,
