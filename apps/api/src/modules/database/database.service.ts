@@ -101,7 +101,7 @@ export class DatabaseService implements OnModuleInit {
       createdAt: new Date().toISOString(),
     });
 
-    // 5. Drivers & Vehicles
+    // Initialize drivers and vehicles
     for (const d of INITIAL_SEED_DATA.drivers) {
       const vType = this.vehicleTypes.find((vt) => vt.code === d.vehicleTypeCode);
       const vehicleId = `veh-${d.driverCode}`;
