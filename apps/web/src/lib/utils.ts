@@ -123,6 +123,7 @@ export function getChannelIcon(channel: string): string {
   }
 }
 
+// Get color class for approval status
 export function getApprovalColor(status: string): string {
   switch (status) {
     case 'APPROVED': return 'text-status-live bg-status-live-bg'
