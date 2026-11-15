@@ -81,7 +81,7 @@ export class DatabaseService implements OnModuleInit {
       createdAt: new Date().toISOString(),
     }));
 
-    // 4. Profiles
+    // Initialize user profiles
     this.profiles = INITIAL_SEED_DATA.users.map((u) => ({
       id: u.id,
       fullName: u.fullName,
