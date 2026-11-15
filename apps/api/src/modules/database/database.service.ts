@@ -74,7 +74,7 @@ export class DatabaseService implements OnModuleInit {
       createdAt: new Date().toISOString(),
     }));
 
-    // 3. Terminals
+    // Initialize terminals
     this.terminals = INITIAL_SEED_DATA.terminals.map((t) => ({
       ...t,
       isActive: true,
