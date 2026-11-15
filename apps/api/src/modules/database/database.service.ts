@@ -149,7 +149,7 @@ export class DatabaseService implements OnModuleInit {
         updatedAt: new Date().toISOString(),
       });
 
-      // If DISPATCHER channel driver, check in to terminal queue position 1
+      // Add dispatcher drivers to terminal queue
       if (d.primaryChannel === DriverChannel.DISPATCHER) {
         this.terminalQueue.push({
           id: `tq-${d.id}`,
