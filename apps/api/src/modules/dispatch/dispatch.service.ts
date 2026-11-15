@@ -32,7 +32,7 @@ export class DispatchService {
     @Inject(ChannelsService) private readonly channels: ChannelsService,
   ) {}
 
-  /** Ride dispatch service */
+  // Core dispatch and driver assignment logic
 
   /**
    * Dispatches a ride to the nearest eligible driver.
