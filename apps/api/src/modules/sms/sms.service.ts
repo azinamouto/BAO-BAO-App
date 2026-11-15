@@ -49,7 +49,7 @@ export class SmsService {
     @Inject(ConsoleSmsProvider) private readonly smsProvider: ConsoleSmsProvider,
   ) {}
 
-  /** SMS service for driver interactions */
+  // SMS-based driver command processing
 
   /**
    * Normalizes phone number to Philippine format (+63...).
