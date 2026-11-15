@@ -113,6 +113,7 @@ export function getAvailabilityColor(avail: string): string {
   }
 }
 
+// Get emoji icon for driver channel
 export function getChannelIcon(channel: string): string {
   switch (channel) {
     case 'APP': return '📱'
