@@ -16,10 +16,7 @@ export class InvalidTransitionError extends ConflictException {
 export class RideStateMachine {
   private currentStatus: RideStatus;
 
-  /**
-   * Creates a new RideStateMachine instance.
-   * @param initialStatus - The starting ride status (defaults to REQUESTED)
-   */
+  // Initialize with starting status
   constructor(initialStatus: RideStatus = RideStatus.REQUESTED) {
     this.currentStatus = initialStatus;
   }
