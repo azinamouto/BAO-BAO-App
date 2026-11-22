@@ -32,10 +32,7 @@ export class AppChannel implements DriverChannelAdapter {
   }
 }
 
-/**
- * Channel adapter for SMS-based drivers.
- * Sends SMS messages for ride offers and updates.
- */
+// Channel adapter for SMS-based drivers
 @Injectable()
 export class SmsChannel implements DriverChannelAdapter {
   readonly type = DriverChannel.SMS;
