@@ -18,11 +18,7 @@ export interface ApiErrorResponse {
 // Global exception filter for consistent error responses
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  /**
-   * Catches and formats exceptions into consistent API error responses.
-   * @param exception - The caught exception
-   * @param host - The arguments host
-   */
+  // Catch and format exceptions
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
