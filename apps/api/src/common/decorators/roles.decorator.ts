@@ -1,10 +1,7 @@
 import { SetMetadata } from '@nestjs/common';
 import { UserRole } from '@bao-bao/shared';
 
-/**
- * Metadata key for storing required roles.
- * Used by RolesGuard to check user permissions.
- */
+// Metadata key for storing required roles
 export const ROLES_KEY = 'roles';
 
 /**
