@@ -13,18 +13,7 @@ export const LIVE_APP_FRESHNESS_THRESHOLD_SEC = 120; // 2 minutes
 // Threshold for map visibility (30 minutes)
 export const MAP_VISIBILITY_EXPIRY_SEC = 1800; // 30 minutes
 
-/**
- * Calculates location freshness and applies honesty downgrade rules.
- *
- * Downgrade rules:
- * - LIVE_APP locations older than 2 minutes become LAST_REPORTED
- * - Locations older than 30 minutes are hidden from the map
- *
- * @param originalSource - The original tracking source of the location
- * @param locationUpdatedAt - When the location was last updated (Date or ISO string)
- * @param now - Current time for calculation (defaults to now)
- * @returns FreshnessResult with effective source, age, and visibility status
- */
+// Calculate location freshness with downgrade rules
 export function calculateLocationFreshness(
   originalSource: TrackingSource,
   locationUpdatedAt: Date | string,
