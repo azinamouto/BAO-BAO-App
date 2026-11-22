@@ -59,13 +59,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(statusCode).json(payload);
   }
 
-  /**
-   * Derives a semantic error code from HTTP status and message.
-   * Maps common error scenarios to specific error codes.
-   * @param status - HTTP status code
-   * @param message - Error message
-   * @returns Semantic error code
-   */
+  // Derive semantic error code from status and message
   private deriveErrorCode(status: number, message: string): string {
     if (status === HttpStatus.UNAUTHORIZED) return 'AUTH_UNAUTHORIZED';
     if (status === HttpStatus.FORBIDDEN) return 'AUTH_FORBIDDEN';
