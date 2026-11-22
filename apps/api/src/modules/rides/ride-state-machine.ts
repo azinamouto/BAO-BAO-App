@@ -26,12 +26,7 @@ export class RideStateMachine {
     return this.currentStatus;
   }
 
-  /**
-   * Checks if a transition to the target status is allowed for the given actor.
-   * @param to - The target ride status
-   * @param actor - The type of actor attempting the transition
-   * @returns true if the transition is allowed, false otherwise
-   */
+  // Check if transition is allowed for actor
   public canTransition(to: RideStatus, actor: ActorType): boolean {
     return isAllowedTransition(this.currentStatus, to, actor);
   }
