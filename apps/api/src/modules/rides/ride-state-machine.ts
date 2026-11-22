@@ -21,10 +21,7 @@ export class RideStateMachine {
     this.currentStatus = initialStatus;
   }
 
-  /**
-   * Gets the current ride status.
-   * @returns The current RideStatus
-   */
+  // Get current ride status
   public getStatus(): RideStatus {
     return this.currentStatus;
   }
