@@ -3,10 +3,7 @@ import { DriverChannel, SmsDirection, SmsStatus } from '@bao-bao/shared';
 import { DriverChannelAdapter } from './driver-channel.interface';
 import { DatabaseService } from '../database/database.service';
 
-/**
- * Channel adapter for smartphone app drivers.
- * Sends push notifications for ride offers and updates.
- */
+// Channel adapter for smartphone app drivers
 @Injectable()
 export class AppChannel implements DriverChannelAdapter {
   readonly type = DriverChannel.APP;
