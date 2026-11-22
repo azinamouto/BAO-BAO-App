@@ -7,10 +7,7 @@ export interface FreshnessResult {
   isHidden: boolean;
 }
 
-/**
- * Threshold in seconds for LIVE_APP location to be considered fresh.
- * Locations older than this are downgraded to LAST_REPORTED.
- */
+// Threshold for LIVE_APP freshness (2 minutes)
 export const LIVE_APP_FRESHNESS_THRESHOLD_SEC = 120; // 2 minutes
 
 /**
