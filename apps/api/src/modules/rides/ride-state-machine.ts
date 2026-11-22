@@ -1,10 +1,7 @@
 import { RideStatus, ActorType, isAllowedTransition } from '@bao-bao/shared';
 import { ConflictException } from '@nestjs/common';
 
-/**
- * Custom exception thrown when an invalid ride state transition is attempted.
- * Extends ConflictException to return HTTP 409 status.
- */
+// Custom exception for invalid ride state transitions
 export class InvalidTransitionError extends ConflictException {
   constructor(from: RideStatus, to: RideStatus, actor: ActorType) {
     super({
