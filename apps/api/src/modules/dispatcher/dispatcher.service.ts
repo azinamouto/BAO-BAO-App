@@ -18,16 +18,12 @@ import { DatabaseService } from '../database/database.service';
 import { RideStateMachine } from '../rides/ride-state-machine';
 import { calculateLocationFreshness } from '../location/location-freshness';
 
-/**
- * Service for terminal dispatcher operations.
- * Handles terminal queue management, driver assignment, and ride status updates on behalf of drivers.
- * Used by terminal dispatchers who operate from physical terminals.
- */
+// Service for terminal dispatcher operations
 @Injectable()
 export class DispatcherService {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
-  /** Terminal dispatcher service */
+  // Terminal queue and driver management
 
   /**
    * Retrieves terminals accessible to the dispatcher.
