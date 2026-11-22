@@ -31,13 +31,7 @@ export class RideStateMachine {
     return isAllowedTransition(this.currentStatus, to, actor);
   }
 
-  /**
-   * Performs a state transition if valid, otherwise throws an error.
-   * @param to - The target ride status
-   * @param actor - The type of actor attempting the transition
-   * @returns The new current status after transition
-   * @throws InvalidTransitionError if the transition is not allowed
-   */
+  // Perform state transition if valid
   public transition(to: RideStatus, actor: ActorType): RideStatus {
     if (!this.canTransition(to, actor)) {
       throw new InvalidTransitionError(this.currentStatus, to, actor);
