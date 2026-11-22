@@ -89,10 +89,7 @@ export class SmsChannel implements DriverChannelAdapter {
   }
 }
 
-/**
- * Channel adapter for terminal dispatcher console.
- * Routes offers and updates to the terminal dispatcher interface.
- */
+// Channel adapter for terminal dispatcher console
 @Injectable()
 export class DispatcherChannel implements DriverChannelAdapter {
   readonly type = DriverChannel.DISPATCHER;
