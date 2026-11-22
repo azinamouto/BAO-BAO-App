@@ -15,11 +15,7 @@ export interface ApiErrorResponse {
   details?: unknown;
 }
 
-/**
- * Global exception filter for consistent error responses.
- * Catches all exceptions and formats them into a standardized API error response.
- * Handles both NestJS HttpException and generic Error types.
- */
+// Global exception filter for consistent error responses
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   /**
