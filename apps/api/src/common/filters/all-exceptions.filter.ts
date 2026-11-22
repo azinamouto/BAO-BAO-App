@@ -7,10 +7,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-/**
- * Standard API error response format.
- * Used consistently across all endpoints for error handling.
- */
+// Standard API error response format
 export interface ApiErrorResponse {
   statusCode: number;
   code: string;
