@@ -1,10 +1,6 @@
 import { TrackingSource } from '@bao-bao/shared';
 
-/**
- * Result of location freshness calculation.
- * Includes the effective tracking source after downgrade rules,
- * the age of the location data, and whether it should be hidden.
- */
+// Result of location freshness calculation
 export interface FreshnessResult {
   effectiveSource: TrackingSource;
   ageSeconds: number;
