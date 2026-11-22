@@ -7,11 +7,7 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../../modules/database/database.service';
 
-/**
- * Guard for Supabase-based authentication.
- * Validates Bearer tokens and loads user profiles from the database.
- * Supports JWT tokens (with sub/id payload) and direct user IDs for testing.
- */
+// Guard for Supabase-based authentication
 @Injectable()
 export class SupabaseAuthGuard implements CanActivate {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
