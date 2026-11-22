@@ -10,10 +10,7 @@ export interface FreshnessResult {
 // Threshold for LIVE_APP freshness (2 minutes)
 export const LIVE_APP_FRESHNESS_THRESHOLD_SEC = 120; // 2 minutes
 
-/**
- * Threshold in seconds for location visibility on the map.
- * Locations older than this are hidden from passengers.
- */
+// Threshold for map visibility (30 minutes)
 export const MAP_VISIBILITY_EXPIRY_SEC = 1800; // 30 minutes
 
 /**
