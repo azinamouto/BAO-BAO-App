@@ -12,10 +12,7 @@ export class InvalidTransitionError extends ConflictException {
   }
 }
 
-/**
- * State machine for managing ride status transitions.
- * Ensures that rides only transition between valid states based on the actor type.
- */
+// State machine for ride status transitions
 export class RideStateMachine {
   private currentStatus: RideStatus;
 
