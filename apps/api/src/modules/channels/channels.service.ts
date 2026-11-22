@@ -120,10 +120,7 @@ export class DispatcherChannel implements DriverChannelAdapter {
   }
 }
 
-/**
- * Service for managing driver channel adapters.
- * Provides access to the appropriate adapter based on driver's primary channel.
- */
+// Service for managing driver channel adapters
 @Injectable()
 export class ChannelsService {
   private adapters: Map<DriverChannel, DriverChannelAdapter> = new Map();
