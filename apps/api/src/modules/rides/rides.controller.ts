@@ -31,12 +31,7 @@ export class RidesController {
 
   // Passenger ride management
 
-  /**
-   * Creates a new ride request and initiates dispatch.
-   * @param passenger - The authenticated passenger
-   * @param dto - Ride creation details
-   * @returns Created ride with sanitized driver information
-   */
+  // Create new ride request
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create a new ride request' })
