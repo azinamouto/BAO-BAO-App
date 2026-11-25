@@ -22,11 +22,7 @@ import {
   ProfileDto,
 } from '@bao-bao/shared';
 
-/**
- * Controller for admin dashboard operations.
- * Provides endpoints for dashboard stats, driver/vehicle management, and audit logs.
- * All endpoints require admin role and authentication.
- */
+// Controller for admin dashboard operations
 @ApiTags('Admin Dashboard')
 @Controller('admin')
 @UseGuards(SupabaseAuthGuard, RolesGuard)
@@ -35,7 +31,7 @@ import {
 export class AdminController {
   constructor(@Inject(AdminService) private readonly adminService: AdminService) {}
 
-  /** Admin dashboard operations */
+  // Admin operations
 
   /**
    * Retrieves dashboard statistics for admin overview.
