@@ -32,7 +32,7 @@ import {
 export class DriversController {
   constructor(@Inject(DriversService) private readonly driversService: DriversService) {}
 
-  /** Driver operations controller */
+  // Driver operations for app channel
 
   @Post('drivers/register')
   @ApiOperation({ summary: 'Submit driver profile + vehicle for approval' })
