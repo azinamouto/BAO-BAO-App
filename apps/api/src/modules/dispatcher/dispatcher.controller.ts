@@ -65,11 +65,7 @@ export class DispatcherController {
     return this.dispatcherService.queueCheckIn(body.terminalId, body.driverId);
   }
 
-  /**
-   * Checks a driver out of the terminal queue.
-   * @param body - Terminal and driver IDs
-   * @returns Updated queue entry
-   */
+  // Check driver out of queue
   @Post('queue/check-out')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Check out a driver from the terminal queue' })
