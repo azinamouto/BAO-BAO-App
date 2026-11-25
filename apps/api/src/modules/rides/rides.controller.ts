@@ -70,13 +70,7 @@ export class RidesController {
     return this.ridesService.getRideHistory(passenger.id);
   }
 
-  /**
-   * Cancels a ride request.
-   * @param id - The ride ID
-   * @param actor - The authenticated user cancelling the ride
-   * @param dto - Cancellation reason
-   * @returns Cancelled ride information
-   */
+  // Cancel ride request
   @Post(':id/cancel')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Cancel ride request' })
