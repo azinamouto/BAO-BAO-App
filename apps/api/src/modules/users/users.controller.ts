@@ -22,7 +22,7 @@ import { UpdateProfileDto, ProfileDto } from '@bao-bao/shared';
 export class UsersController {
   constructor(@Inject(UsersService) private readonly usersService: UsersService) {}
 
-  /** User profile controller */
+  // User profile operations
 
   @Get()
   @ApiOperation({ summary: 'Get current user profile and role' })
