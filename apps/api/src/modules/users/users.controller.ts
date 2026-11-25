@@ -25,7 +25,7 @@ export class UsersController {
   // User profile operations
 
   @Get()
-  @ApiOperation({ summary: 'Get current user profile and role' })
+  @ApiOperation({ summary: 'Get current user profile' })
   @ApiResponse({ status: 200, description: 'Profile retrieved' })
   async getMe(@CurrentUser() user: ProfileDto) {
     return this.usersService.getMe(user.id);
