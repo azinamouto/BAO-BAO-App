@@ -52,12 +52,7 @@ export class RidesController {
     return this.ridesService.getActiveRide(passenger.id);
   }
 
-  /**
-   * Retrieves a specific ride by ID.
-   * @param id - The ride ID
-   * @param user - The authenticated user
-   * @returns Ride details with phone numbers redacted
-   */
+  // Get ride by ID
   @Get(':id')
   @ApiOperation({ summary: 'Get ride detail by ID' })
   @ApiResponse({ status: 200, description: 'Ride details (phone numbers redacted for passenger)' })
