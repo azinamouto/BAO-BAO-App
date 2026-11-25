@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { AdminDashboard, Driver, Vehicle, RideRequest } from '@/types'
 
+// Admin dashboard hooks
 export function useAdminDashboard() {
   return useQuery({
     queryKey: ['admin', 'dashboard'],
