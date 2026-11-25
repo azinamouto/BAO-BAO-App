@@ -33,10 +33,7 @@ export class AdminController {
 
   // Admin operations
 
-  /**
-   * Retrieves dashboard statistics for admin overview.
-   * @returns Dashboard metrics including active drivers, vehicles, and ride counts
-   */
+  // Get dashboard statistics
   @Get('dashboard')
   @ApiOperation({ summary: 'Admin KPI summary metrics' })
   async getDashboard() {
