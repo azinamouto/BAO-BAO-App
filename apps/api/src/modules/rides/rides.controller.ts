@@ -93,13 +93,7 @@ export class RidesController {
     return this.ridesService.retryRide(id, actor);
   }
 
-  /**
-   * Rates a completed ride.
-   * @param id - The ride ID
-   * @param passenger - The authenticated passenger
-   * @param dto - Rating score and optional comment
-   * @returns Created rating record
-   */
+  // Rate completed ride
   @Post(':id/rating')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Rate completed ride' })
