@@ -32,7 +32,7 @@ export class UsersController {
   }
 
   @Patch()
-  @ApiOperation({ summary: 'Update profile details' })
+  @ApiOperation({ summary: 'Update user profile' })
   async updateMe(
     @CurrentUser() user: ProfileDto,
     @Body() dto: UpdateProfileDto,
