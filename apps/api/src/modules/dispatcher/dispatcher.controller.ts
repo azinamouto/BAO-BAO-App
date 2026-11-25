@@ -41,11 +41,7 @@ export class DispatcherController {
     return this.dispatcherService.getTerminals(user.id);
   }
 
-  /**
-   * Retrieves rides for terminal dispatch.
-   * @param status - Optional status filter
-   * @returns List of rides with driver information
-   */
+  // Get rides for dispatch
   @Get('rides')
   @ApiOperation({ summary: 'Pending / active rides for terminal dispatch' })
   @ApiQuery({ name: 'status', required: false, type: String })
