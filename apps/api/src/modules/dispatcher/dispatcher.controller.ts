@@ -85,13 +85,7 @@ export class DispatcherController {
     return this.dispatcherService.assignRide(rideId, body.driverId, dispatcher);
   }
 
-  /**
-   * Updates ride status on behalf of the driver.
-   * @param rideId - The ride ID
-   * @param body - New ride status
-   * @param dispatcher - The authenticated dispatcher
-   * @returns Updated ride information
-   */
+  // Update ride status on behalf
   @Post('rides/:id/status')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Update ride status on driver behalf (ARRIVED, IN_PROGRESS, COMPLETED)' })
