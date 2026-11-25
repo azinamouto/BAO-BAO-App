@@ -63,11 +63,7 @@ export class RidesController {
     return this.ridesService.getRideById(id, user);
   }
 
-  /**
-   * Retrieves ride history for the current passenger.
-   * @param passenger - The authenticated passenger
-   * @returns List of rides sorted by request time
-   */
+  // Get ride history
   @Get()
   @ApiOperation({ summary: 'Get ride history for current passenger' })
   async getRideHistory(@CurrentUser() passenger: ProfileDto) {
