@@ -10,11 +10,7 @@ export class ZonesController {
 
   // Zone management
 
-  /**
-   * Retrieves all active zones in Talibon.
-   * Includes pickup zones, terminals, and coverage areas.
-   * @returns List of active zones
-   */
+  // Get all active zones
   @Get()
   @ApiOperation({ summary: 'List all pickup zones, terminals, and coverage areas in Talibon' })
   @ApiResponse({ status: 200, description: 'List of active zones' })
