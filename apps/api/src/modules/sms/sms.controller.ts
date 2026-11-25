@@ -44,10 +44,7 @@ export class SmsController {
     return { received: true, status: body.status || 'DELIVERED' };
   }
 
-  /**
-   * Retrieves SMS message logs for admin viewing.
-   * @returns List of SMS messages sorted by timestamp
-   */
+  // Get SMS logs
   @Get('admin/sms')
   @UseGuards(SupabaseAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
