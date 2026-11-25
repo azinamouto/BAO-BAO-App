@@ -82,12 +82,7 @@ export class RidesController {
     return this.ridesService.cancelRide(id, actor, dto);
   }
 
-  /**
-   * Retries a ride that failed to find a driver.
-   * @param id - The ride ID
-   * @param actor - The authenticated user requesting retry
-   * @returns Updated ride information
-   */
+  // Retry failed ride
   @Post(':id/retry')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Re-request after NO_DRIVER_FOUND' })
