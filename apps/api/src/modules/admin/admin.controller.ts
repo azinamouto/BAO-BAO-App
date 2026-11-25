@@ -54,13 +54,7 @@ export class AdminController {
     return this.adminService.getDriverById(id);
   }
 
-  /**
-   * Updates driver approval status.
-   * @param id - The driver ID
-   * @param body - Object containing new approval status
-   * @param adminUser - The admin user performing the action
-   * @returns Updated driver information
-   */
+  // Update driver approval status
   @Patch('drivers/:id/approval')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Approve, suspend, or reject a driver' })
