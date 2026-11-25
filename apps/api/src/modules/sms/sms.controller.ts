@@ -36,11 +36,7 @@ export class SmsController {
     return this.smsService.handleInboundSms(body.from, body.body, signature);
   }
 
-  /**
-   * Webhook endpoint for SMS delivery receipts.
-   * @param body - Delivery status payload
-   * @returns Acknowledgment
-   */
+  // Handle SMS delivery receipts
   @Post('webhooks/sms/status')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Delivery receipts from SMS gateway' })
