@@ -85,12 +85,7 @@ export class AdminController {
     return this.adminService.getVehicles();
   }
 
-  /**
-   * Updates vehicle approval status.
-   * @param id - The vehicle ID
-   * @param body - Object containing new approval status
-   * @returns Updated vehicle information
-   */
+  // Update vehicle approval status
   @Patch('vehicles/:id/approval')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Approve or suspend a vehicle' })
