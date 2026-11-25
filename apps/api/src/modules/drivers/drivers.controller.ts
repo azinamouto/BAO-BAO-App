@@ -53,7 +53,7 @@ export class DriversController {
   @Post('driver/status')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Toggle driver availability (AVAILABLE / OFFLINE)' })
+  @ApiOperation({ summary: 'Update driver availability' })
   async updateStatus(
     @CurrentUser() user: ProfileDto,
     @Body() dto: UpdateDriverStatusDto,
