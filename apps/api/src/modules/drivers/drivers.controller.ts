@@ -76,7 +76,7 @@ export class DriversController {
 
   @Get('driver/offers')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
-  @ApiOperation({ summary: 'Pending ride offers for driver' })
+  @ApiOperation({ summary: 'Get pending ride offers' })
   async getOffers(@CurrentUser() user: ProfileDto) {
     const driver = await this.driversService.getDriverForUser(user.id);
     return this.driversService.getOffers(driver.id);
