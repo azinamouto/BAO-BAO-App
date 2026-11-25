@@ -105,13 +105,7 @@ export class RidesController {
     return this.ridesService.rateRide(id, passenger.id, dto);
   }
 
-  /**
-   * Reports an incident for a ride.
-   * @param id - The ride ID
-   * @param reporter - The authenticated user reporting the incident
-   * @param dto - Incident category and description
-   * @returns Created incident report
-   */
+  // Report ride incident
   @Post(':id/report')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Report incident on ride' })
