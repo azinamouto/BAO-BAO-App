@@ -85,7 +85,7 @@ export class DriversController {
   @Post('driver/offers/:id/accept')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Accept ride offer (concurrency-locked)' })
+  @ApiOperation({ summary: 'Accept ride offer' })
   async acceptOffer(
     @Param('id') offerId: string,
     @CurrentUser() user: ProfileDto,
