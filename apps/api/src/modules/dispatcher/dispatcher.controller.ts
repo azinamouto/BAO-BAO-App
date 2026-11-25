@@ -49,11 +49,7 @@ export class DispatcherController {
     return this.dispatcherService.getRides(status);
   }
 
-  /**
-   * Retrieves drivers with their queue status and locations.
-   * @param terminalId - Optional terminal ID filter
-   * @returns List of drivers with enhanced information
-   */
+  // Get drivers with queue status
   @Get('drivers')
   @ApiOperation({ summary: 'Drivers in terminal queue or nearby with channel + status' })
   @ApiQuery({ name: 'terminalId', required: false, type: String })
