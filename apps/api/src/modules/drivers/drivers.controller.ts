@@ -174,7 +174,7 @@ export class DriversController {
 
   @Get('driver/rides')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
-  @ApiOperation({ summary: 'Driver ride history' })
+  @ApiOperation({ summary: 'Get driver ride history' })
   async getDriverRides(@CurrentUser() user: ProfileDto) {
     const driver = await this.driversService.getDriverForUser(user.id);
     return this.driversService.getDriverRides(driver.id);
