@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import type { RideRequest, Driver, TerminalQueueEntry } from '@/types'
 
+// Dispatcher console hooks
 export function useDispatcherRides(terminalId?: string) {
   return useQuery({
     queryKey: ['dispatcher', 'rides', terminalId],
