@@ -96,10 +96,7 @@ export class AdminController {
     return this.adminService.updateVehicleApproval(id, body.status);
   }
 
-  /**
-   * Retrieves all ride requests.
-   * @returns List of all rides sorted by request time
-   */
+  // Get all rides
   @Get('rides')
   @ApiOperation({ summary: 'All ride requests' })
   async getRides() {
