@@ -65,10 +65,7 @@ export class DriversController {
   @Post('driver/location')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Update driver live GPS location',
-    description: 'Sets tracking_source to LIVE_APP and refreshes timestamp',
-  })
+  @ApiOperation({ summary: 'Update driver GPS location' })
   async updateLocation(
     @CurrentUser() user: ProfileDto,
     @Body() dto: DriverLocationUpdateDto,
