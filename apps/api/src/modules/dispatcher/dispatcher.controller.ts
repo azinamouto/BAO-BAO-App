@@ -23,11 +23,7 @@ import {
   RideStatus,
 } from '@bao-bao/shared';
 
-/**
- * Controller for terminal dispatcher console operations.
- * Provides endpoints for queue management, driver assignment, and ride status updates.
- * Requires DISPATCHER or ADMIN role.
- */
+// Controller for terminal dispatcher console operations
 @ApiTags('Dispatcher Console')
 @Controller('dispatch')
 @UseGuards(SupabaseAuthGuard, RolesGuard)
@@ -36,7 +32,7 @@ import {
 export class DispatcherController {
   constructor(@Inject(DispatcherService) private readonly dispatcherService: DispatcherService) {}
 
-  /** Dispatcher console operations */
+  // Terminal dispatcher operations
 
   /**
    * Retrieves terminals managed by the current dispatcher.
