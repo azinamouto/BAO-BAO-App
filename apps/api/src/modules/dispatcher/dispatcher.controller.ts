@@ -34,11 +34,7 @@ export class DispatcherController {
 
   // Terminal dispatcher operations
 
-  /**
-   * Retrieves terminals managed by the current dispatcher.
-   * @param user - The authenticated dispatcher
-   * @returns List of accessible terminals
-   */
+  // Get managed terminals
   @Get('terminals')
   @ApiOperation({ summary: 'Terminals managed by the current dispatcher' })
   async getTerminals(@CurrentUser() user: ProfileDto) {
