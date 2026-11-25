@@ -57,11 +57,7 @@ export class DispatcherController {
     return this.dispatcherService.getDrivers(terminalId);
   }
 
-  /**
-   * Checks a driver into the terminal queue.
-   * @param body - Terminal and driver IDs
-   * @returns Queue entry with position
-   */
+  // Check driver into queue
   @Post('queue/check-in')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Check in a driver to the terminal queue' })
