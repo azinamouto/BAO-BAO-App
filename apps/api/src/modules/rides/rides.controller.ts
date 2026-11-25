@@ -44,11 +44,7 @@ export class RidesController {
     return this.ridesService.createRide(passenger, dto);
   }
 
-  /**
-   * Retrieves the current active ride for the passenger.
-   * @param passenger - The authenticated passenger
-   * @returns Active ride or null if none exists
-   */
+  // Get current active ride
   @Get('active')
   @ApiOperation({ summary: 'Get current active ride for passenger' })
   @ApiResponse({ status: 200, description: 'Current active ride or null' })
