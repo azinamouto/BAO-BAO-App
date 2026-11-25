@@ -40,10 +40,7 @@ export class AdminController {
     return this.adminService.getDashboardStats();
   }
 
-  /**
-   * Retrieves all drivers with their vehicles and status.
-   * @returns List of drivers with vehicle information
-   */
+  // Get all drivers
   @Get('drivers')
   @ApiOperation({ summary: 'List all drivers with channel and status' })
   async getDrivers() {
