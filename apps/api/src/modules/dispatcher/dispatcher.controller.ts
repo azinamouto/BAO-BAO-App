@@ -97,12 +97,7 @@ export class DispatcherController {
     return this.dispatcherService.updateRideStatusOnBehalf(rideId, body.status, dispatcher);
   }
 
-  /**
-   * Creates an offline driver (SMS or Terminal channel).
-   * @param body - Driver and vehicle details
-   * @param dispatcher - The authenticated dispatcher
-   * @returns Created driver information
-   */
+  // Create offline driver
   @Post('drivers')
   @ApiOperation({ summary: 'Create a no-phone / SMS-only driver record' })
   async createDriver(
