@@ -45,7 +45,7 @@ export class DriversController {
 
   @Get('driver/me')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
-  @ApiOperation({ summary: 'Driver profile, vehicle, and current status' })
+  @ApiOperation({ summary: 'Get driver profile' })
   async getMe(@CurrentUser() user: ProfileDto) {
     return this.driversService.getDriverForUser(user.id);
   }
