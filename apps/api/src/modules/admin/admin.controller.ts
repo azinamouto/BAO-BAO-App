@@ -78,10 +78,7 @@ export class AdminController {
     return this.adminService.updateDriverChannel(id, body.channel, adminUser);
   }
 
-  /**
-   * Retrieves all vehicles with type information.
-   * @returns List of vehicles with type details
-   */
+  // Get all vehicles
   @Get('vehicles')
   @ApiOperation({ summary: 'List all vehicles' })
   async getVehicles() {
