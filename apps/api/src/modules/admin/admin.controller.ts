@@ -66,13 +66,7 @@ export class AdminController {
     return this.adminService.updateDriverApproval(id, body.status, adminUser);
   }
 
-  /**
-   * Updates driver's primary communication channel.
-   * @param id - The driver ID
-   * @param body - Object containing new channel
-   * @param adminUser - The admin user performing the action
-   * @returns Updated driver information
-   */
+  // Update driver channel
   @Patch('drivers/:id/channel')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Change primary driver channel (APP, SMS, DISPATCHER)' })
