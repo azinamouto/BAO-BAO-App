@@ -73,13 +73,7 @@ export class DispatcherController {
     return this.dispatcherService.queueCheckOut(body.terminalId, body.driverId);
   }
 
-  /**
-   * Manually assigns a driver to a ride.
-   * @param rideId - The ride ID
-   * @param body - Driver ID
-   * @param dispatcher - The authenticated dispatcher
-   * @returns Updated ride information
-   */
+  // Assign driver to ride
   @Post('rides/:id/assign')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Assign driver to ride on their behalf' })
