@@ -2,16 +2,13 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { DatabaseService } from '../database/database.service';
 
-/**
- * Controller for zone and coverage area information.
- * Provides endpoint for retrieving active pickup zones and terminals.
- */
+// Controller for zone and coverage area information
 @ApiTags('Zones')
 @Controller('zones')
 export class ZonesController {
   constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
-  /** Zones controller */
+  // Zone management
 
   /**
    * Retrieves all active zones in Talibon.
