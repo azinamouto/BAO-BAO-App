@@ -141,7 +141,7 @@ export class DriversController {
   @Post('driver/rides/:id/start')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Passenger boarded, start ride' })
+  @ApiOperation({ summary: 'Start ride' })
   async startRide(
     @Param('id') rideId: string,
     @CurrentUser() user: ProfileDto,
