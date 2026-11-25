@@ -21,11 +21,7 @@ import {
   ProfileDto,
 } from '@bao-bao/shared';
 
-/**
- * Controller for passenger ride operations.
- * Provides endpoints for creating, managing, and rating rides.
- * All endpoints require authentication.
- */
+// Controller for passenger ride operations
 @ApiTags('Rides (Passenger)')
 @Controller('rides')
 @UseGuards(SupabaseAuthGuard)
@@ -33,7 +29,7 @@ import {
 export class RidesController {
   constructor(@Inject(RidesService) private readonly ridesService: RidesService) {}
 
-  /** Rides controller for passenger operations */
+  // Passenger ride management
 
   /**
    * Creates a new ride request and initiates dispatch.
