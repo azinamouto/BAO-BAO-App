@@ -96,7 +96,7 @@ export class DriversController {
   @Post('driver/offers/:id/decline')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Decline ride offer' })
+  @ApiOperation({ summary: 'Decline offer' })
   async declineOffer(
     @Param('id') offerId: string,
     @CurrentUser() user: ProfileDto,
