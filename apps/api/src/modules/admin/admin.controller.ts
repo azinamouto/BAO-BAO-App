@@ -47,11 +47,7 @@ export class AdminController {
     return this.adminService.getDrivers();
   }
 
-  /**
-   * Retrieves a specific driver by ID.
-   * @param id - The driver ID
-   * @returns Driver details with vehicle information
-   */
+  // Get driver by ID
   @Get('drivers/:id')
   @ApiOperation({ summary: 'Get driver details' })
   async getDriverById(@Param('id') id: string) {
