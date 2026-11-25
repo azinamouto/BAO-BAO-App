@@ -107,7 +107,7 @@ export class DriversController {
   @Post('driver/rides/:id/en-route')
   @Roles(UserRole.DRIVER, UserRole.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Heading to pickup location' })
+  @ApiOperation({ summary: 'Mark en route to pickup' })
   async enRoute(
     @Param('id') rideId: string,
     @CurrentUser() user: ProfileDto,
