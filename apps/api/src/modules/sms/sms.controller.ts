@@ -24,13 +24,7 @@ export class SmsController {
 
   // SMS operations
 
-  /**
-   * Webhook endpoint for inbound SMS from drivers.
-   * Parses commands and triggers corresponding actions.
-   * @param body - SMS payload with sender and message
-   * @param signature - Optional webhook signature for verification
-   * @returns SMS reply and action taken
-   */
+  // Handle inbound SMS webhook
   @Post('webhooks/sms/inbound')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Receive driver SMS, parse commands, and trigger actions' })
