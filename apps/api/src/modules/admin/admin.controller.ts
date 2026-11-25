@@ -103,10 +103,7 @@ export class AdminController {
     return this.adminService.getAllRides();
   }
 
-  /**
-   * Retrieves audit log of administrative actions.
-   * @returns List of audit log entries sorted by timestamp
-   */
+  // Get audit logs
   @Get('audit-logs')
   @ApiOperation({ summary: 'Audit trail of administrative actions' })
   async getAuditLogs() {
