@@ -16,16 +16,13 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UserRole } from '@bao-bao/shared';
 
-/**
- * Controller for SMS webhooks and admin SMS operations.
- * Handles inbound SMS from drivers, delivery receipts, and SMS log viewing.
- */
+// Controller for SMS webhooks and operations
 @ApiTags('SMS')
 @Controller()
 export class SmsController {
   constructor(@Inject(SmsService) private readonly smsService: SmsService) {}
 
-  /** SMS operations controller */
+  // SMS operations
 
   /**
    * Webhook endpoint for inbound SMS from drivers.
