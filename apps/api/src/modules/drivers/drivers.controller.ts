@@ -35,7 +35,7 @@ export class DriversController {
   // Driver operations for app channel
 
   @Post('drivers/register')
-  @ApiOperation({ summary: 'Submit driver profile + vehicle for approval' })
+  @ApiOperation({ summary: 'Register driver profile' })
   async register(
     @CurrentUser() user: ProfileDto,
     @Body() dto: RegisterDriverDto,
