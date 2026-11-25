@@ -42,7 +42,7 @@ export class UsersController {
 
   @Delete()
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Deactivate own account' })
+  @ApiOperation({ summary: 'Deactivate account' })
   async deactivateMe(@CurrentUser() user: ProfileDto) {
     return this.usersService.deactivateMe(user.id);
   }
